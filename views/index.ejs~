@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name = "apple-mobile-web-app-capable" content="yes"/>
+    <meta http-equiv="pragma" content="no-cache"/> 
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate"/> 
+    <meta name="format-detection" content="telephone=no" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="white" />
+    <meta name="viewport" content="user-scalable=0, initial-scale=1, maximum-scale=1, minimum-scale=1,target-densitydpi=device-dpi" />
+	<link rel="apple-touch-icon" href="images/Icon.png" />
+	<link rel="shortcut icon" href="images/Icon.png">
+     
+	<style>
+		.tab{margin-left:30px;}
+	
+	</style>
+
+	<title>BitcoinDark Simple Information</title>
+  </head>
+  <body>
+		<span><h2>BitcoinDark/SuperNET - Simple Information Server</h2></span>
+		
+		<div>
+			<span><h4>Usage:</h4></span>
+
+			<span><h4>Standard BitcoinDark RPC:</h4></span>
+			<span>/totalbtcd -- returns total number of BitcoinDark in existence</span><br />
+			<span>/blockcount -- returns current block height</span><br />
+			<span>/difficulty -- returns current PoW and PoS difficulty</span><br />
+			<span>/gettx/<%= "<txid>" %> -- returns information about this transaction</span><br />
+			<span>/getblockhash/<%= "<index>" %> -- returns the requested block hash</span><br />
+			<span>/getblock/<%= "<hash>" %> -- returns information about this block</span><br />
+			<br /><br /><br />
+			<span><h4>BitcoinDark/SuperNET:</h4></span>
+			<span>/getpeers -- returns list of currently connected SuperNET peers</span><br />
+			<span>/ramstatus -- returns node ramchain status</span><br />	
+			<span>/getramblock/<%= "<index>" %> -- returns ramchain information about this block</span><br />
+			<span>/getaddr/<%= "<addr>" %> -- returns ramchain-enabled information about a BitcoinDark address</span><br />	
+			<span>/getRamtx/<%= "<txid>" %> -- returns ramchain-enabled information about a BitcoinDark transaction id</span><br />	
+			<span>/ramtxlist/<%= "<addr>" %>/<%= "<unspent>" %> -- returns ramchain-enabled transaction history information about a BitcoinDark address. (Set <%= "<unpsent>" %> to 'true' or 'false' to include only unspent transactions)</span><br />		
+			<span>/ramrichlist/<%= "<numwhales>" %> -- returns ramchain-enabled BTCD richlist of <%= "numwhales" %> addresses (200 maximum)</span><br />			
+			<p />
+			
+		</div><p /><p /><br /><br />
+		<div>
+
+			<span><b>Donations:</b> (Please consider donating to keep this site active!)</span><br />
+			<span class="tab">RKYdwr66HGjtaV3GapTTXnBqJ8DRcxbMbD</span><br />
+			<span class="tab">1PuhR83yykTsjhgqraY8A6X4YKSeUgCk7J</span><br />
+			<span>2015 BTCDDev</span>
+		</div>
+  </body>
+</html>
