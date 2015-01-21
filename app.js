@@ -44,6 +44,7 @@ app.get('/', function(req,res){
 
 app.get('/totalbtcd', function(req, res){
 	doge.getinfo(function(err, result){
+console.log("err:"+err+" result:"+result);
 		if(err)
 			res.send(err);
 		else{
