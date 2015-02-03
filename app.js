@@ -118,7 +118,7 @@ app.get('/getpeers', function(req, res){
 });
 
 app.get('/ramstatus', function(req, res){
-	doge.SuperNET('{"requestType":"ramstatus", "coin":"BTCD"}', function(err, data){
+	doge.SuperNET('{"requestType":"ramstatus", "destip":"127.0.0.1", "port": "14632", "coin":"BTCD"}', function(err, data){
 		if(err)
 			console.log("err: " + err);
 		else
@@ -127,7 +127,7 @@ app.get('/ramstatus', function(req, res){
 });
 
 app.get('/getaddr/:addr', function(req, res){
-	doge.SuperNET('{"requestType":"ramrawind", "coin":"BTCD", "type": "addr", "string": "' + req.params.addr + '"}', function(err, data){
+	doge.SuperNET('{"requestType":"ramrawind", "destip":"127.0.0.1", "port": "14632", "coin":"BTCD", "type": "addr", "string": "' + req.params.addr + '"}', function(err, data){
 		if(err)
 			console.log("err: " + err);
 		else
@@ -136,7 +136,7 @@ app.get('/getaddr/:addr', function(req, res){
 });
 
 app.get('/getRamtx/:txid', function(req, res){
-	doge.SuperNET('{"requestType":"ramrawind", "coin":"BTCD", "type": "txid", "string": "' + req.params.txid + '"}', function(err, data){
+	doge.SuperNET('{"requestType":"ramrawind", "destip":"127.0.0.1", "port": "14632", "coin":"BTCD", "type": "txid", "string": "' + req.params.txid + '"}', function(err, data){
 		if(err)
 			console.log("err: " + err);
 		else
@@ -158,7 +158,7 @@ else
 });
 
 app.get('/getramblock/:blocknum', function(req, res){
-	doge.SuperNET('{"requestType":"ramblock", "coin":"BTCD", "blocknum": "' + req.params.blocknum + '"}', function(err, data){
+	doge.SuperNET('{"requestType":"ramblock", "destip":"127.0.0.1", "port": "14632", "coin":"BTCD", "blocknum": "' + req.params.blocknum + '"}', function(err, data){
 		if(err)
 			console.log("err: " + err);
 		else
