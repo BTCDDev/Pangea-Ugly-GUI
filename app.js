@@ -118,7 +118,7 @@ app.get('/getpeers', function(req, res){
 });
 
 app.get('/ramstatus', function(req, res){
-	doge.SuperNET('{"requestType":"ramstatus", "destip":"127.0.0.1", "port": "14632", "coin":"BTCD"}', function(err, data){
+	doge.SuperNET('{"requestType":"ramstatus", "coin":"BTCD"}', function(err, data){
 		if(err)
 			console.log("err: " + err);
 		else
