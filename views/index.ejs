@@ -34,6 +34,8 @@
 			<br /><br /><br />
 			<span><h4>BitcoinDark/SuperNET:</h4></span>
 			<span>/getpeers -- returns list of currently connected SuperNET peers</span><br />
+			<span>/ramstatus -- returns current status of node ramchains</span><br />		
+			<span>/getramblock/<%= "<index>"%> -- returns information about this block</span><br />
 			<span>/ramtxlist/<%= "<addr>" %>/<%= "<unspent>" %> -- returns ramchain-enabled transaction history information about a BitcoinDark address. (Set <%= "<unpsent>" %> to 'true' or 'false' to include only unspent transactions)</span><br />		
 			<span>/ramrichlist/<%= "<numwhales>" %> -- returns ramchain-enabled BTCD richlist of <%= "numwhales" %> addresses (200 maximum)</span><br />			
 			<p />
