@@ -1,5 +1,5 @@
 var dogecoin = require('node-dogecoin')();
-dogecoin.auth('user', 'HOv3ONTzldo9TGk');
+dogecoin.auth('user', 'password');
 
 module.exports = dogecoin;
 

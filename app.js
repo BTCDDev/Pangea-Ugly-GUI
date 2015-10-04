@@ -15,7 +15,7 @@ var doge=require("./dogeapi");
 
 
 // all environments
-app.set('port', process.env.PORT || 80);
+app.set('port', process.env.PORT || 8080);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.favicon());
@@ -32,12 +32,20 @@ if ('development' == app.get('env')) {
 }
 console.log('BitcoinDark Simple Info Starting');
 
-var server = http.createServer(app).listen(app.get('port'), function(err, result){
+var server = http.createServer(app);
+var io = require('socket.io').listen(server);
+server.listen(app.get('port'), function(err, result){
     console.log('Express server listening on port ' + app.get('port'));
 });
 
 app.get('/', function(req,res){
 	res.render('index');
+	});	
+
+
+
+app.get('/table/:tableID', function(req,res){
+	    res.render('table', {tableid: req.params.tableID});
 	});	
 
 //Std functions///////////////
@@ -178,6 +186,83 @@ if(req.params.numwhales <= 200){
 }
 else
     res.render('ramrichlist', {richlist: "Please specify a number less than 200 for the top addresses"});
+});
+
+
+io.sockets.on('connection', function(socket){
+
+    //console.log("Connection from " + socket.request.connection.remoteAddress);
+    socket.on('pangeaLobby', function(data){
+        doge.SuperNET('{"plugin":"InstantDEX","method":"orderbook","base":"BTCD","exchange":"pangea","allfields":1}', function(err, data){
+            console.log("GOT RESPONSE: " + JSON.stringify(err) + JSON.stringify(data));
+            socket.emit('pangeaLobbyRes', data);
+        });
+    });
+
+
+    socket.on('pangeaJoin', function(data){
+        doge.SuperNET('{"plugin":"InstantDEX","method":"placebid","base":"BTCD","exchange":"pangea","volume":1, "timeout":100}', function(err, data){
+            console.log("GOT RESPONSE: " + JSON.stringify(err) + JSON.stringify(data));
+            socket.emit('pangeaJoinRes', data);
+
+        });
+    });
+
+
+
+    socket.on('pangeaStatus', function(data){
+        if(data.tableid){
+            doge.SuperNET('{"plugin":"pangea","method":"status", "tableid": "' + data.tableid + '", "timeout":100}', function(err, data){
+                socket.emit('pangeaStatusRes', data);
+
+            });
+        }
+        else{
+            doge.SuperNET('{"plugin":"pangea","method":"status", "timeout":100}', function(err, data){
+                socket.emit('pangeaStatusRes', data);
+
+            });
+        }
+    });
+
+
+    socket.on('pangeaStart', function(data){
+        var d = JSON.stringify(data.data);
+
+        doge.SuperNET(JSON.parse(d), function(err, data){
+            socket.emit('pangeaStartRes', data);
+
+        });
+    });
+
+
+    function isNumeric(n) {
+      return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+
+    socket.on('pangeaTurn', function(data){
+        var d = data;
+        console.log(JSON.stringify(data));
+        var action = d.action;
+        var amtFlag = 0;
+        var amount;
+        if(action=="bet" || action=="raise"){
+            if(!isNumeric(d.amount)){
+                socket.emit('pangeaError', {message: "Amount is not numeric!"});
+                return;
+            }
+            doge.SuperNET('{"plugin":"pangea","method":"turn", "action":"'+action+'", "amount":"'+d.amount+'"}', function(err, data){
+                console.log("TURN got: " + JSON.stringify(data));
+            });
+        }
+        else{
+            doge.SuperNET('{"plugin":"pangea","method":"turn", "action":"'+action+'"}', function(err, data){
+                console.log("TURN got: " + JSON.stringify(data));
+            });
+        }
+
+    });
+
 });
 
     

@@ -11,8 +11,8 @@
     "ejs": "0.8.5",
     "async": "0.2.10",
     "mongode": "0.1.6",
-    "node-dogecoin": "0.3.5",
-    "socket.io": "0.9.16",
+    "node-btcd": "*",
+    "socket.io": "*",
 	"cryptoaddress-validator": "0.0.1",
 	"xss":"0.1.7"
   }
