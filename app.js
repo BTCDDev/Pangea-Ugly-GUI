@@ -38,6 +38,13 @@ server.listen(app.get('port'), function(err, result){
     console.log('Express server listening on port ' + app.get('port'));
 });
 
+
+/*
+ *
+ * Ugly Pangea GUI Routes
+ *
+*/
+
 app.get('/', function(req,res){
 	res.render('index');
 	});	
@@ -45,6 +52,11 @@ app.get('/', function(req,res){
 app.get('/rosetta', function(req,res){
 	res.render('rosetta');
 	});	
+
+app.get('/cashier', function(req,res){
+	res.render('cashier');
+	});	
+
 
 app.get('/table/:tableID', function(req,res){
 	    res.render('table', {tableid: req.params.tableID});
@@ -115,87 +127,16 @@ app.get('/gettx/:txid', function(req, res){
 });
 
 
-//SuperNET functions///////////////
-
-
-app.get('/getpeers', function(req, res){
-	doge.SuperNET('{"requestType":"getpeers"}', function(err, data){
-		if(err)
-			console.log("err: " + err);
-		else
-			res.render('getpeers',{peers:JSON.parse(data).peers});
-	});
-});
-
-app.get('/ramstatus', function(req, res){
-	doge.SuperNET('{"requestType":"ramstatus", "coin":"BTCD"}', function(err, data){
-		if(err)
-			console.log("err: " + err);
-		else
-			res.render('ramstatus', {status: data});
-	});
-});
-
-app.get('/getaddr/:addr', function(req, res){
-	doge.SuperNET('{"requestType":"ramrawind", "type": "addr", "string": "' + req.params.addr + '"}', function(err, data){
-		if(err)
-			console.log("err: " + err);
-		else
-			res.render('getaddr', {addr: JSON.stringify(data)});
-	});
-});
-
-app.get('/getRamtx/:txid', function(req, res){
-	doge.SuperNET('{"requestType":"ramrawind", "destip":"127.0.0.1", "port": "14632", "coin":"BTCD", "type": "txid", "string": "' + req.params.txid + '"}', function(err, data){
-		if(err)
-			console.log("err: " + err);
-		else
-			res.render('getramtx', {tx: JSON.stringify(data)});
-	});
-});
-var unspent = 0;
-app.get('/ramtxlist/:addr/:unspent', function(req, res){
-if(req.params.unspent == "true")
-    unspent = 1;
-else
-    unspent = 0;
-	doge.SuperNET('{"requestType":"ramtxlist", "coin":"BTCD", "address": "' + req.params.addr + '", "unspent": "' + unspent + '"}', function(err, data){
-		if(err)
-			console.log("err: " + err);
-		else
-			res.render('ramtxlist', {txlist: JSON.stringify(data)});
-	});
-});
-
-app.get('/getramblock/:blocknum', function(req, res){
-	doge.SuperNET('{"requestType":"ramblock", "coin":"BTCD", "blocknum": "' + req.params.blocknum + '"}', function(err, data){
-		if(err)
-			console.log("err: " + err);
-		else
-			res.render('ramblock', {block: JSON.stringify(data)});
-	});
-});
-
-
-app.get('/ramrichlist/:numwhales', function(req, res){
-if(req.params.numwhales <= 200){
-	doge.SuperNET('{"requestType":"ramrichlist", "coin":"BTCD", "numwhales": "'+ req.params.numwhales +'"}', function(err, data){
-		if(err)
-			console.log("err: " + err);
-		else
-			res.render('ramrichlist', {richlist: JSON.stringify(data)});
-	});
-}
-else
-    res.render('ramrichlist', {richlist: "Please specify a number less than 200 for the top addresses"});
-});
-
+/*
+ *
+ *  socket.io
+ *
+*/
 
 io.sockets.on('connection', function(socket){
 
     socket.on('pangeaLobby', function(data){
         doge.SuperNET('{"plugin":"InstantDEX","method":"orderbook","base":"BTCD","exchange":"pangea","allfields":1}', function(err, data){
-            console.log("GOT RESPONSE: " + JSON.stringify(err) + JSON.stringify(data));
             socket.emit('pangeaLobbyRes', data);
         });
     });
@@ -203,7 +144,6 @@ io.sockets.on('connection', function(socket){
 
     socket.on('pangeaJoin', function(data){
         doge.SuperNET('{"plugin":"InstantDEX","method":"placebid","base":"BTCD","exchange":"pangea","volume":1, "timeout":100}', function(err, data){
-            console.log("GOT RESPONSE: " + JSON.stringify(err) + JSON.stringify(data));
             socket.emit('pangeaJoinRes', data);
 
         });
@@ -253,12 +193,10 @@ io.sockets.on('connection', function(socket){
                 return;
             }
             doge.SuperNET('{"plugin":"pangea","method":"turn", "action":"'+action+'", "amount":"'+d.amount+'"}', function(err, data){
-                console.log("TURN got: " + JSON.stringify(data));
             });
         }
         else{
             doge.SuperNET('{"plugin":"pangea","method":"turn", "action":"'+action+'"}', function(err, data){
-                console.log("TURN got: " + JSON.stringify(data));
             });
         }
 
@@ -266,7 +204,6 @@ io.sockets.on('connection', function(socket){
 
     socket.on('pangeaRosetta', function(data){
         doge.SuperNET('{"plugin":"pangea","method":"rosetta"}', function(err, data){
-            console.log("Rosetta got err=" + err + " Data=" + JSON.stringify(data));
             socket.emit("pangeaRosettaRes", data);
         });
 
@@ -279,13 +216,10 @@ io.sockets.on('connection', function(socket){
     });
 
     socket.on('pangeaRosettaCoin', function(data){
-        console.log("querying " + '{"plugin":"pangea","method":"rosetta", "coin": "' + data.coin +'", "addr": "' + data.address + '"}');
-
-
         if(data.coin == "BTCD"){
             doge.dumpprivkey(data.address, function(err, d){
                 if(err){
-                    socket.emit('pangeaError', {message: err.error});
+                    socket.emit('pangeaError', {message: err.message});
                 }
                 else{
                 doge.SuperNET('{"plugin":"pangea","method":"rosetta", "coin": "' + data.coin +'", "wip": "' + d + '"}', function(err, data){
@@ -304,6 +238,22 @@ io.sockets.on('connection', function(socket){
 
     });
 
+
+    socket.on('pangeaBuyin', function(data){
+        doge.SuperNET( '{"plugin":"pangea","method":"buyin","tableid":"'+data.tableid+'","amount":"'+data.amount+'"}', function(err, data){
+            console.log("returned " + JSON.stringify(data));
+            socket.emit('pangeaBuyinRes', data);
+        });
+        
+    });
+
+    socket.on('pangeaRates', function(data){
+
+        doge.SuperNET('{"plugin":"pangea","method":"rates"}', function(err, data){
+            socket.emit('pangeaRatesRes', data);
+        });
+        
+    });
 
 
 });

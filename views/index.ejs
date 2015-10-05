@@ -139,6 +139,7 @@
             socket.on('pangeaLobbyRes', function(data){
                 offers = [];
                 data = JSON.parse(data);
+                console.log(data);
                 $("#lobbyDiv").html("Available Players Waiting to Join a Table: <br />");
             
                 for(var w=0; w<data.numbids; w++){
@@ -208,6 +209,7 @@
 			<p />
 			
 		</div><p /><p /><br />
+        <a href="/cashier">Cashier</a><br />
         <a href="/rosetta">Rosetta</a><br />
         <div id="tableDiv"></div>
         <br />

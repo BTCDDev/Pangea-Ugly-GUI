@@ -21,7 +21,6 @@
         .boolean { color: blue; }
         .null { color: magenta; }
         .key { color: red; }
-
 	</style>
     <script>
             
@@ -48,28 +47,46 @@
                     return '<span class="' + cls + '">' + match + '</span>';
                 });
             }
-/*
-./BitcoinDarkd SuperNET '{"plugin":"pangea","method":"rosetta"}'
-./BitcoinDarkd SuperNET '{"plugin":"pangea","method":"rosetta","coin":"BTCD","addr":"RGLbLB5YHM6vngmd8XKvAFCUK8zDfWoSSr"}'
-./BitcoinDarkd SuperNET '{"plugin":"pangea","method":"rosetta","coin":"BTC","wip":"xxx"}'
-*/
-            var $rosettaBtn = $("#rosettaBtn");
-            var $responseDiv = $("#responseDiv");
 
 
+            socket.emit('pangeaRates', {});
+            socket.emit('pangeaStatus', {});
+            var updateTables = function(json)
+            {
+                var $tablesList = $("#tableIdSelect");
+                $tablesList.empty();
+                if (json == null){ 
+                    $tablesList.append('<option value="">None</option>'); 
+                }
+                else if (json.tables == null) { $tablesList.append('<option value="">None</option>'); }
+                else{
+                    for(var i=0; i<json.tables.length; i++){
+                        $tablesList.append('<option value="' + json.tables[i].tableid + '">Table '+i+' -- (' + json.tables[i].tableid +')</option>');
+                    }
+                }
+            }
 
-            var flag = 0;
 
             socket.on('pangeaStatusRes', function(data){
+                console.log(JSON.stringify(data));
+                var d = JSON.parse(data);
+                updateTables(d);
                 var $statusDiv = $("#statusDiv");
-                if(flag == 0 ){
-                    flag = 1;
-                }
             });
-            socket.on('pangeaError', function(data){ alert( data.message); });
 
 
-            socket.on("pangeaRosettaRes", function(data){ 
+            socket.on('pangeaRatesRes', function(data){
+                var child = $("pre");
+                if(child) child.empty();
+                var str = JSON.stringify(JSON.parse(data), undefined, 4);
+                output(syntaxHighlight(str));
+
+            });
+
+            socket.on('pangeaError', function(data){ alert(data.message); });
+
+
+            socket.on("pangeaBuyinRes", function(data){ 
                 var child = $("pre");
                 if(child) child.empty();
                 var str = JSON.stringify(JSON.parse(data), undefined, 4);
@@ -81,74 +98,32 @@
 
         $(document).ready(function(){
 
-
-            $("#rosettaBtn").on('click', function(){
-                socket.emit("pangeaRosetta", {});            
+            $("#updateStatusBtn").on('click', function(){
+                socket.emit('pangeaStatus', {});
             });
 
-        $("#rosettaCoinBtn").on('click', function(){
-            var $coin = $("#coinSelect").val();
-            var $addr = $("#addrInput").val();
-            if($addr == "" || $addr.length < 34){
-                $("#responseDiv").text("Please Enter a valid address!");
-                return;
-            }   
-            socket.emit('pangeaRosettaCoin', {coin: $coin, address: $addr});
-        
-        });
 
-
-        $("#rosettaPrivKeyBtn").on('click', function(){
-            var $coin = $("#wipCoinSelect").val();
-            var $addr = $("#privkeyInput").val();
-            if($addr == "" || $addr.length < 51 || $addr.length > 60){
-                $("#responseDiv").text("Please Enter a valid private key!");
-                return;
-            }   
-            socket.emit('pangeaRosettaWipCoin', {coin: $coin, address: $addr});
-        
-        });
-
-/*
-
-        <select id="wipCoinSelect">
-              <option value="BTCD">BTCD</option>
-              <option value="BTC">BTC</option>
-              <option value="LTC">LTC</option>
-              <option value="DOGE">DOGE</option>
-        </select>
-        <input id="privkeyInput" type="password"></input>
-        <button id="rosettaPrivKeyBtn">Rosetta - Specific Coin - Private Key</button>
-*/
-
+            $("#buyinBtn").on('click', function(){
+                var $amount = $("#amountInput").val();
+                var $tableid = $("#tableIdSelect").val();
+                console.log($tableid + " " + $amount);
+                socket.emit("pangeaBuyin", {tableid: $tableid, amount: $amount});            
+            });
         });
     </script>
 	<title>BitcoinDark Pangea Basic GUI</title>
   </head>
   <body>
-		<span><h2>BitcoinDark Pangea Basic GUI - Rosetta</h2></span>
-        <button id="rosettaBtn">Rosetta</button><br />
-        <div id="rosettaCoinDiv">
-        <select id="coinSelect">
-              <option value="BTCD">BTCD</option>
-              <option value="BTC">BTC</option>
-              <option value="LTC">LTC</option>
-              <option value="DOGE">DOGE</option>
+		<span><h2>BitcoinDark Pangea Basic GUI - Cashier</h2></span>
+        <div id="mainDiv">
+        <select id="tableIdSelect">
         </select>
-        <input id="addrInput" value="addr"></input>
-        <button id="rosettaCoinBtn">Rosetta - Specific Coin</button><br />
+        <input id="amountInput" value="0" type="number"></input>
+        <button id="buyinBtn">Buyin</button><br />
         </div>
-        <div id="rosettaPrivKeyDiv">
-        <select id="wipCoinSelect">
-              <option value="BTCD">BTCD</option>
-              <option value="BTC">BTC</option>
-              <option value="LTC">LTC</option>
-              <option value="DOGE">DOGE</option>
-        </select>
-        <input id="privkeyInput" type="password"></input>
-        <button id="rosettaPrivKeyBtn">Rosetta - Specific Coin - Private Key</button><br />
+        <div id="updateDiv">
+            <button id="updateStatusBtn">Update Tables</button>
         </div>
-						
 		</div><p />
         <p>
             <div id="responseDiv" style="margin-top:20px;text-align:center;">
@@ -163,5 +138,9 @@
 			    <span>2015 BTCDDev</span>
             </center>
 		</div>
+        <div id="ratesDiv">
+            <span>Rates:</span>
+            <div id="rates"></div>
+        </div>
   </body>
 </html>
