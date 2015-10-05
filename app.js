@@ -42,7 +42,9 @@ app.get('/', function(req,res){
 	res.render('index');
 	});	
 
-
+app.get('/rosetta', function(req,res){
+	res.render('rosetta');
+	});	
 
 app.get('/table/:tableID', function(req,res){
 	    res.render('table', {tableid: req.params.tableID});
@@ -191,7 +193,6 @@ else
 
 io.sockets.on('connection', function(socket){
 
-    //console.log("Connection from " + socket.request.connection.remoteAddress);
     socket.on('pangeaLobby', function(data){
         doge.SuperNET('{"plugin":"InstantDEX","method":"orderbook","base":"BTCD","exchange":"pangea","allfields":1}', function(err, data){
             console.log("GOT RESPONSE: " + JSON.stringify(err) + JSON.stringify(data));
@@ -262,6 +263,48 @@ io.sockets.on('connection', function(socket){
         }
 
     });
+
+    socket.on('pangeaRosetta', function(data){
+        doge.SuperNET('{"plugin":"pangea","method":"rosetta"}', function(err, data){
+            console.log("Rosetta got err=" + err + " Data=" + JSON.stringify(data));
+            socket.emit("pangeaRosettaRes", data);
+        });
+
+    });
+
+    socket.on('pangeaRosettaWipCoin', function(data){
+        doge.SuperNET('{"plugin":"pangea","method":"rosetta", "coin": "' + data.coin +'", "wip": "' + data.address + '"}', function(err, data){
+            socket.emit("pangeaRosettaRes", data);
+        });
+    });
+
+    socket.on('pangeaRosettaCoin', function(data){
+        console.log("querying " + '{"plugin":"pangea","method":"rosetta", "coin": "' + data.coin +'", "addr": "' + data.address + '"}');
+
+
+        if(data.coin == "BTCD"){
+            doge.dumpprivkey(data.address, function(err, d){
+                if(err){
+                    socket.emit('pangeaError', {message: err.error});
+                }
+                else{
+                doge.SuperNET('{"plugin":"pangea","method":"rosetta", "coin": "' + data.coin +'", "wip": "' + d + '"}', function(err, data){
+                    socket.emit("pangeaRosettaRes", data);
+                });
+                }
+            });
+        }
+        else{
+                doge.SuperNET('{"plugin":"pangea","method":"rosetta", "coin": "' + data.coin +'", "addr": "' + data.address + '"}', function(err, data){
+                    socket.emit("pangeaRosettaRes", data);
+                });
+        }
+
+
+
+    });
+
+
 
 });
 
