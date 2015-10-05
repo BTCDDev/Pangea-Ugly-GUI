@@ -126,10 +126,8 @@ betting
 
 ///////////////Main Function
 
-
             drawScreen = function(table){
-
-
+            
             //Submitting a move
             $("#allinBtn").on('click', function(){ socket.emit('pangeaTurn', {action: "allin"});  });
             $("#checkBtn").on('click', function(){ socket.emit('pangeaTurn', {action: "check"});  });      
