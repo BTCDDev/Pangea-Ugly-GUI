@@ -20,7 +20,7 @@
     <script>
             var table = "";
             var tableid = "<%= tableid %>";
-            var socket = io.connect("http://127.0.0.1:8080");
+            var socket = io();
             var drawScreen = function(){}
 
             socket.emit('pangeaStatus', {tableid: tableid});

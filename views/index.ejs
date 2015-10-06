@@ -18,6 +18,7 @@
 	
 	</style>
     <script>
+        var pretty = <%= pretty %>;
         var initStatusFlag = 0;
         var offers = []; //All Players in the lobby   
         var myOffer = "";
@@ -31,7 +32,7 @@
         $(document).ready(function(){
 
             console.log("Ready");
-            var socket = io.connect("http://127.0.0.1:8080");
+            var socket = io();
             socket.emit('pangeaStatus', {});
             var $lobby = $("#lobbyBtn");
             var $joinBtn = $("#joinBtn");
@@ -206,7 +207,13 @@
                     var $tableDiv = $("#tableDiv");
                     if(data.tables){
                         for(var i=0; i<data.tables.length; i++){
-                            $tableDiv.append('<a href="/table/'+data.tables[i].tableid+'">Table '+data.tables[i].tableid+'</a><br/>');
+                            if (pretty){
+                                $tableDiv.append('<a href="/pretty-table/'+data.tables[i].tableid+'">Table '+data.tables[i].tableid+'</a><br/>');
+                            }
+                            else{
+                                $tableDiv.append('<a href="/table/'+data.tables[i].tableid+'">Table '+data.tables[i].tableid+'</a><br/>');
+                            }
+
                         }   
                     }
                     initStatusFlag = 1;

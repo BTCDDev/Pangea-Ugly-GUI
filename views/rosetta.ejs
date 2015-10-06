@@ -25,7 +25,7 @@
 	</style>
     <script>
             
-            var socket = io.connect("http://127.0.0.1:8080");
+            var socket = io();
 
             function output(inp) {
                 document.body.appendChild(document.createElement('pre')).innerHTML = inp;
