@@ -7,7 +7,7 @@ pangea.constants.root = $('#poker-room')
 pangea.constants.emptyseatbg = '#3C3D3D'
 pangea.constants.seatbg = '#616f91'
 pangea.constants.seatborder = '#CAC7FF'
-pangea.constants.facedown = './images/cards/Red_Back-150.png'
+pangea.constants.facedown = '/images/cards/Red_Back-150.png'
 pangea.constants.dealwidth = 30
 
 pangea.constants.p0 = [[494, 90], [475, 92], [488, 106], [507, 104], [470, 108]]

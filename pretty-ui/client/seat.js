@@ -6,7 +6,7 @@ var WebSocket = window.WebSocket
 pangea.Seat = function(seat, avatar, name, stack){
   this.seat = seat
   this.bg = pangea.constants.seatbg
-  if (avatar === undefined) {this.avatar = './images/avatar-default.png'}
+  if (avatar === undefined) {this.avatar = '../pretty-ui/images/avatar-default.png'}
   else {this.avatar = avatar}
   this.name = name
   this.stack = stack

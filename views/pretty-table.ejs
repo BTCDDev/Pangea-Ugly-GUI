@@ -1,7 +1,7 @@
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="../pret/pangeapoker.css">
-    <link rel="stylesheet" type="text/css" href="testing.css">
+    <link rel="stylesheet" type="text/css" href="../pretty-ui/pangeapoker.css">
+    <link rel="stylesheet" type="text/css" href="../pretty-ui/testing.css">
   </head>
   <body>
     <div id="poker-room">
@@ -135,7 +135,7 @@
 	<div id="chat-input">
 	  <input type="text" onkeypress="pangea.chatKeyPress()"><div id="submitchat">OK</div>
 	  <div id="settings">
-	    <img src="images/settings.png">
+	    <img src="../pretty-ui/images/settings.png">
 	  </div>
 	</div>
       </div>
@@ -255,5 +255,9 @@
     <script src="../pretty-ui/gui.js"></script>
     <script src="../pretty-ui/api.js"></script>
     <script src="../pretty-ui/pangea.js"></script>
+  	<script>
+	  pangea.tableId = "<%= tableid %>";
+	  pangea.playerId = "<%= playerId %>";
+  	</script>
   </body>
 </html>

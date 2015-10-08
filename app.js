@@ -2,7 +2,7 @@
 /**
  * Module dependencies.
  */
-var pretty = true;
+var pretty = false;
 
 var express = require('express');
 var routes = require('./routes');
@@ -31,6 +31,7 @@ app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/pretty-ui", express.static(path.join(__dirname, './pretty-ui/client')));
+app.use("/pretty-table/images", express.static(path.join(__dirname, './pretty-ui/client/images')));
 app.use(express.static(path.join(__dirname,'/pretty-ui/client')));
 
 // development only
@@ -75,7 +76,13 @@ app.get('/table/:tableID', function(req,res){
 	});
 
 app.get('/pretty-table/:tableID', function(req, res, next){
-    res.render('pretty-table', {root: __dirname});
+    prettyui.Table.tableId = req.params.tableID;
+    var playerId = 0;
+
+    if (req.query.playerId)
+        playerId = req.query.playerId;;
+
+    res.render('pretty-table', {tableid: req.params.tableID, playerId: playerId});
     //express.static(path.join('./pretty-ui/client/index.html'))(req, res, next);
 });
 
@@ -170,7 +177,7 @@ io.sockets.on('connection', function(socket){
 
     socket.on('pangeaStatus', function(data){
         if(data.tableid){
-            doge.SuperNET('{"plugin":"pangea","method":"status", "tableid": "' + data.tableid + '", "timeout":100}', function(err, data){
+            doge.SuperNET('{"plugin":"pangea","method":"status", "tableid": "' + data.tableid + '", "timeout":100, "threadid": 0}', function(err, data){
                 socket.emit('pangeaStatusRes', data);
 
             });

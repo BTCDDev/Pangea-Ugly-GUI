@@ -19,7 +19,7 @@ pangea.deck1 = {}
 pangea.deck2 = {}
 
 pangea.makedeck.deck1 = function(){
-  var prefix = './images/cards/'
+  var prefix = '../pretty-ui/images/cards/'
   var suffix = '-150.png'
   for (var i=0; i < pangea.makedeck.symbols.length; i++){
     var filename = prefix + pangea.makedeck.symbols[i] + suffix
@@ -28,7 +28,7 @@ pangea.makedeck.deck1 = function(){
 }
 
 pangea.makedeck.deck2 = function(){
-  var prefix = './images/4color/'
+  var prefix = './pretty-ui/images/4color/'
   var suffix = '-150.png'
   for (var i=0; i < pangea.makedeck.symbols.length; i++){
     var filename = prefix + pangea.makedeck.symbols[i] + suffix

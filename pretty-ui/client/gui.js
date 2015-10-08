@@ -230,7 +230,7 @@ pangea.gui.timer = function(){
       var timerImg = "./images/timer.gif?" + new Date().getTime();
       var timerHtml = "<img src='"+ timerImg +"'>"
       // var timerHtml = '10'
-      $('#timer').html(timerHtml)
+      $('#timer').html(pangea.game.timer)
       var timerElement = $('#timer > img')
       timerElement.css('position', 'absolute')
       // var xoffset = ($('#timer').width() - timerElement.width())/2
@@ -239,8 +239,15 @@ pangea.gui.timer = function(){
       // var yoffset = ($('#timer').height() - timerElement.height())/2
       var yoffset = 16
       timerElement.css('top', yoffset)
-    } 
+    }
+    else{
+      hideTimer();
+    }
   } else {
+   hideTimer();
+  }
+
+  function hideTimer(){
     $('#timer').addClass('hide')
     var timerElement = $('#timer > img')
     timerElement.remove()

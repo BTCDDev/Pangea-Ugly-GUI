@@ -86,8 +86,8 @@ $('#check').click(function(){
 })
 
 $('#bet').click(function(){
-  var thisBet = $('#bet-amount').val()
-  if (thisBet >= pangea.game.tocall){
+  var thisBet = $('#bet-amount').val().trim()
+  if (thisBet != "" && thisBet >= pangea.game.tocall){
     pangea.sendMessage({'action':{'bet':thisBet}})
   }
 })

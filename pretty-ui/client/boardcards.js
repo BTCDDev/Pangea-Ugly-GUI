@@ -30,7 +30,7 @@ pangea.BoardCard.prototype.show = function(){
   if (this.image != null){
     var cardElement = $('<img>')
     cardElement.attr('src', this.image)
-    $(this.selector).append(cardElement)
+    $(this.selector).html(cardElement)
   }
 }
 
