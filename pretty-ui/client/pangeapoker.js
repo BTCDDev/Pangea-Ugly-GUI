@@ -327,5 +327,5 @@ function poll(){
     pangea.ws.emit('pangeaStatus2', {tableid: pangea.tableId, playerId: pangea.playerId});
 
     poll();
-  }, 2000);
+  }, 500);
 }
