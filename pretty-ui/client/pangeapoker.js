@@ -184,6 +184,7 @@ pangea.startGame = function(){
       return;
     }
 
+    //initialize this players data
     pangea.table = data.table;
     pangea.mynxtid = pangea.table.addrs[pangea.table.myind];
     pangea.seat = parseInt(pangea.table.myind);
@@ -242,6 +243,7 @@ pangea.startGame = function(){
         pot: [pangea.table.potTotals]
       });
 
+      //update all the seats
       var seats = [];
       for (var i = 0; i < pangea.table.addrs.length; i++){
         var addr = pangea.table.addrs[i];
@@ -267,9 +269,9 @@ pangea.startGame = function(){
           pangea.API.player(player);
         }
 
-        //if (addr == pangea.mynxtid && pangea.table.hand.holecards != undefined){
-        //  seats[seats.length - 1].playercards = pangea.table.hand.holecards.split(" ");
-        //}
+        if (addr == pangea.mynxtid && pangea.table.hand.holecards != undefined){
+          seats[i].playercards = pangea.table.hand.holecards.split(" ");
+        }
       };
 
       pangea.API.seats(seats);
@@ -282,8 +284,10 @@ pangea.startGame = function(){
       }
       else{
         var cards = {};
+
+        //check if the hand is over so we can return the cards
         if (pangea.table.hand.community.trim() == 0){
-          pangea.API.action({"returnCards": 0});
+          //pangea.API.action({"returnCards": 0});
         }
         else {
           var community = pangea.table.hand.community.trim().split(" ");
@@ -300,6 +304,7 @@ pangea.startGame = function(){
           }
 
 
+          //get the community cards to display the flop
           for (var i = 0; i < community.length; i++) {
             cards[i] = community[i];
           }
