@@ -120,7 +120,6 @@ pangea.Seat.prototype.returnCards = function(){
 }
 
 pangea.Seat.prototype.showCards = function(){
-  if (this.player == 1){return true}
   if (Array.isArray(this.playercards)){
     if (pangea.cards.indexOf(this.playercards[0]) > -1 &&
         pangea.cards.indexOf(this.playercards[1]) > -1){
