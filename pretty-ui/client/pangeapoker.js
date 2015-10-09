@@ -286,8 +286,8 @@ pangea.startGame = function(){
         var cards = {};
 
         //check if the hand is over so we can return the cards
-        if (pangea.table.hand.community.trim() == 0){
-          //pangea.API.action({"returnCards": 0});
+        if (pangea.table.summary){
+          pangea.API.action({"returnCards": 0});
         }
         else {
           var community = pangea.table.hand.community.trim().split(" ");
