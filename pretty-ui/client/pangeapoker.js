@@ -118,7 +118,11 @@ pangea.openSocketIO = function(){
     });
 
     socketio.emit("message", {"action": {"ready": 0}, playerId: pangea.playerId});
-    pangea.startGame();
+
+    setTimeout(function(){
+      pangea.startGame();
+    }, 2000);
+
   });
 
   return socketio;
@@ -162,163 +166,203 @@ var polling = false;
 //track the last card so we know the round has ended
 var lastCommunityCard;
 
+var newGame = true;
+var dealt = false;
+var lastTurn = -1;
 
 pangea.startGame = function(){
-
-  var newGame = true;
-  var dealt = false;
-  var lastTurn = -1;
-
   pangea.ws.on('pangeaStatusRes', function(data){
-    console.log(data);
-
-    data = JSON.parse(data);
-
-    if (!data)
-    {
-      console.log("error connecting to supernet. data is null");
-    }
-
-    if (data.error){
-      console.log(data.error);
-      return;
-    }
-
-    //initialize this players data
-    pangea.table = data.table;
-    pangea.mynxtid = pangea.table.addrs[pangea.table.myind];
-    pangea.seat = parseInt(pangea.table.myind);
-
-    //override the player - FOR TESTING PURPOSES
-    if (pangea.playerId){
-      pangea.seat = pangea.playerId;
-    }
+    initializePlayerData(handleStatusResult(data));
 
     if (newGame) {
-      newGame = false;
-
-      var game = {
-        bigblind: pangea.table.bigblind,
-        myturn: pangea.table.hand.undergun == pangea.seat ? 1 : 0,
-        tocall: 0,
-        pot: [0]
-      };
-
-      var smallblind = pangea.table.bigblind / 2
-
-      game.gametype = "NL Holdem<br /> Blinds " + smallblind + "/" + game.bigblind;
-
-      pangea.API.game(game);
-
-      //pangea.ws.emit('pangeaBuyin', {tableid: pangea.table.tableid, amount: 15000000000});
-      //
-      //pangea.ws.on('pangeaBuyinRes', function(data){
-      //  var data = JSON.parse(data);
-      //
-      //  if (data.error){
-      //    console.log(data.error);
-      //    //handle error
-      //  }
-      //  else {
-      //    var seat = [{
-      //      empty: 0,
-      //      seat: parseInt(pangea.seat),
-      //      playing: 1,
-      //      stack: 150
-      //    }];
-      //  }
-      //
-      //  pangea.API.seats(seat);
-
-
-      //});
+      startNewGame();
     }
     else{
-      //update the players timer, pass 0 since server removed timeleft propert
-      pangea.API.game({
-        timer: pangea.table.timeleft != undefined ? pangea.table.timeleft : 0,
-        myturn: pangea.table.hand.undergun == pangea.seat ? 1 : 0,
-        tocall: pangea.table.hand.betsize - pangea.table.bets[ pangea.seat],
-        //array starting with the main pot
-        pot: [pangea.table.potTotals]
-      });
+      updateGame();
 
-      //update all the seats
-      var seats = [];
-      for (var i = 0; i < pangea.table.addrs.length; i++){
-        var addr = pangea.table.addrs[i];
-        seats.push({
-          empty: 0,
-          seat: i,
-          name: addr,
-          playing: 1,
-          player: pangea.table.seat == i ? 1 : 0,
-          stack: pangea.table.balances[i],
-          bet: pangea.table.bets[i]
-        });
+      updateSeats();
 
-        //if this is the current player
-        if (i == pangea.seat){
-          var player = {
-            seat: parseInt(pangea.seat),
-            sitting: 1,
-            holecards: pangea.table.hand.holecards.split(" "),
-            stack: pangea.table.balances[i]
-          };
-
-          pangea.API.player(player);
-        }
-
-        if (addr == pangea.mynxtid && pangea.table.hand.holecards != undefined){
-          seats[i].playercards = pangea.table.hand.holecards.split(" ");
-        }
-      };
-
-      pangea.API.seats(seats);
-
-      if (!dealt) {
-        var obj = {"holecards": [null, null], "dealer": 0};
-        console.log(obj);
-        pangea.API.deal(obj);
-        dealt = true;
-      }
-      else{
-        var cards = {};
-
-        //check if the hand is over so we can return the cards
-        if (pangea.table.summary){
-          pangea.API.action({"returnCards": 0});
-        }
-        else {
-          var community = pangea.table.hand.community.trim().split(" ");
-
-          //detect if round has completed so we can push the chips to the middle
-          var last = community[community.length - 1];
-          if (lastCommunityCard == undefined){
-            lastCommunityCard = last;
-          }
-          if (lastCommunityCard != last){
-            lastCommunityCard = last;
-
-            pangea.API.action({"chipsToPot" : 1});
-          }
-
-
-          //get the community cards to display the flop
-          for (var i = 0; i < community.length; i++) {
-            cards[i] = community[i];
-          }
-        }
-
-        var obj = {"board": cards, "dealer": pangea.table.button};
-        console.log("dealing:" + cards);
-        pangea.API.deal(obj);
-      }
+      performGameActions();
     }
   });
 
   if (!polling)
     poll();
+}
+
+function startNewGame(){
+  newGame = false;
+
+  var game = {
+    bigblind: pangea.table.bigblind,
+    myturn: pangea.table.hand.undergun == pangea.seat ? 1 : 0,
+    tocall: 0,
+    pot: [0]
+  };
+
+  var smallblind = pangea.table.bigblind / 2
+
+  game.gametype = "NL Holdem<br /> Blinds " + smallblind + "/" + game.bigblind;
+
+  pangea.API.game(game);
+}
+
+function handleStatusResult(data){
+  console.log(data);
+
+  data = JSON.parse(data);
+
+  if (!data)
+  {
+    console.log("error connecting to supernet. data is null");
+  }
+  else if (data.error){
+    console.log(data.error);
+    return;
+  }
+
+  return data;
+}
+
+function initializePlayerData(data){
+  //initialize this players data
+  pangea.table = data.table;
+  pangea.mynxtid = pangea.table.addrs[pangea.table.myind];
+  pangea.seat = parseInt(pangea.table.myind);
+
+  //override the player - FOR TESTING PURPOSES
+  if (pangea.playerId){
+    pangea.seat = pangea.playerId;
+  }
+}
+
+function updateGame(){
+  //update the players timer, pass 0 since server removed timeleft propert
+  pangea.API.game({
+    timer: pangea.table.timeleft != undefined ? pangea.table.timeleft : 0,
+    myturn: pangea.table.hand.undergun == pangea.seat ? 1 : 0,
+    tocall: pangea.table.hand.betsize - pangea.table.bets[ pangea.seat],
+    //array starting with the main pot
+    pot: pangea.table.potTotals
+  });
+}
+
+function updateSeats(){
+  //update all the seats
+  var seats = [];
+  for (var i = 0; i < pangea.table.addrs.length; i++){
+    var addr = pangea.table.addrs[i];
+    seats.push({
+      empty: 0,
+      seat: i,
+      name: addr,
+      playing: 1,
+      player: pangea.table.seat == i ? 1 : 0,
+      stack: pangea.table.balances[i],
+      bet: pangea.table.bets[i]
+    });
+
+    //if this is the current player
+    if (i == pangea.seat){
+      var player = {
+        seat: parseInt(pangea.seat),
+        sitting: 1,
+        stack: pangea.table.balances[i]
+      };
+
+      if (dealt){
+        player.holecards = pangea.table.hand.holecards.split(" ");
+      }
+
+      pangea.API.player(player);
+    }
+
+    if (dealt && addr == pangea.mynxtid && pangea.table.hand.holecards != undefined){
+      seats[i].playercards = pangea.table.hand.holecards.split(" ");
+    }
+  };
+
+  pangea.API.seats(seats);
+}
+
+function performGameActions(){
+  //summary is true when a hand has ended, we'll deal the new cards when the new game is ready and this flag is removed
+  if (!pangea.table.summary && !dealt) {
+    var obj = {"holecards": [null, null], "dealer": 0};
+    console.log(obj);
+    pangea.API.deal(obj);
+    dealt = true;
+  }
+  else{
+    var cards = {};
+
+    //check if the hand is over so we can return the cards
+    if (pangea.table.summary && dealt){
+      pangea.API.action({"returnCards": 0});
+      dealt = false;
+
+      //delay sliding the chips to the player until slightly after the cards are returned
+      (function(won){
+        setTimeout(function(){
+          //and move the chips to the winner
+          for (var i = 0; i < won.length; i++){
+            if (won[i] > 0){
+              pangea.API.action({"chipsToPlayer": i});
+            }
+          }
+        }, 500);
+      })(pangea.table.summary.won);
+    }
+    else if (dealt){
+      var community = pangea.table.hand.community.trim().split(" ");
+
+      //detect if round has completed so we can push the chips to the middle
+      var last = community[community.length - 1];
+      if (lastCommunityCard == undefined){
+        lastCommunityCard = last;
+      }
+      if (lastCommunityCard != last){
+        lastCommunityCard = last;
+
+        pangea.API.action({"chipsToPot" : 1});
+      }
+
+
+      //get the community cards to display the flop
+      for (var i = 0; i < community.length; i++) {
+        cards[i] = community[i];
+      }
+    }
+
+    var obj = {"board": cards, "dealer": pangea.table.button};
+    console.log("dealing:" + cards);
+    pangea.API.deal(obj);
+  }
+}
+
+function buyin(){
+  //pangea.ws.emit('pangeaBuyin', {tableid: pangea.table.tableid, amount: 15000000000});
+  //
+  //pangea.ws.on('pangeaBuyinRes', function(data){
+  //  var data = JSON.parse(data);
+  //
+  //  if (data.error){
+  //    console.log(data.error);
+  //    //handle error
+  //  }
+  //  else {
+  //    var seat = [{
+  //      empty: 0,
+  //      seat: parseInt(pangea.seat),
+  //      playing: 1,
+  //      stack: 150
+  //    }];
+  //  }
+  //
+  //  pangea.API.seats(seat);
+
+
+  //});
 }
 
 function poll(){
@@ -327,5 +371,5 @@ function poll(){
     pangea.ws.emit('pangeaStatus2', {tableid: pangea.tableId, playerId: pangea.playerId});
 
     poll();
-  }, 500);
+  }, 1000);
 }

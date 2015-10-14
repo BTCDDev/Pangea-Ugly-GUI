@@ -81,10 +81,10 @@ pangea.API.action = function(actionArray){
     if (actionArray.hasOwnProperty(action)){
       if (action == 'chipsToPot'){(pangea.gui.chipsToPot())}
       if (action == 'chipsToPlayer'){
-        pangea.gui.chipsToPlayer(actionArray[action][0])
+        pangea.gui.chipsToPlayer(actionArray[action])
       }
       if (action == 'returnPlayerCards'){
-        var thisseat = parseInt(actionArray[action][0])
+        var thisseat = parseInt(actionArray[action])
         console.log(thisseat)
         pangea.seats[thisseat].returnCards()
       }
