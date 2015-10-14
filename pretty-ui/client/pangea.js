@@ -72,7 +72,8 @@ $('#bet_slider').on("input", function(){
 
 $('#fold').click(function(){
   if (pangea.game.myturn == 1){
-    pangea.sendMessage({'action':{'fold':'1'}})
+    pangea.sendMessage({'action':{'fold':'1'}});
+    pangea.onFold();
   } else {
     $('#checkbox1').click()
   }

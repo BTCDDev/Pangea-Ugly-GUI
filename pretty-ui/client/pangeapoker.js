@@ -156,6 +156,10 @@ pangea.sendMessage = function(message){
   console.log('Sent: ', message)
 }
 
+pangea.onFold = function(){
+  pangea.API.action({"returnPlayerCards": pangea.seat});
+}
+
 pangea.dealerTray()
 pangea.wsURI = 'ws://localhost:8081'
 pangea.ws = pangea.openSocketIO()
