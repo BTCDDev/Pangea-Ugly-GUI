@@ -157,6 +157,7 @@ pangea.sendMessage = function(message){
 }
 
 pangea.onFold = function(){
+  folded.push(pangea.seat);
   pangea.API.action({"returnPlayerCards": pangea.seat});
 }
 
@@ -173,6 +174,8 @@ var lastCommunityCard;
 var newGame = true;
 var dealt = false;
 var lastTurn = -1;
+
+var folded = [];
 
 pangea.startGame = function(){
   pangea.ws.on('pangeaStatusRes', function(data){
@@ -212,7 +215,7 @@ function startNewGame(){
 }
 
 function handleStatusResult(data){
-  console.log(data);
+  //console.log(data);
 
   data = JSON.parse(data);
 
@@ -226,6 +229,16 @@ function handleStatusResult(data){
   }
 
   return data;
+}
+
+function reset(){
+  console.log("resetting");
+
+  newGame = true;
+  folded = [];
+  dealt = false;
+
+  pangea.API.action({"returnCards": 0});
 }
 
 function initializePlayerData(data){
@@ -256,6 +269,9 @@ function updateSeats(){
   var seats = [];
   for (var i = 0; i < pangea.table.addrs.length; i++){
     var addr = pangea.table.addrs[i];
+
+    var isFolded = dealt && getIsFolded(i);
+    //don't update the seat if the player has folded
     seats.push({
       empty: 0,
       seat: i,
@@ -263,59 +279,92 @@ function updateSeats(){
       playing: 1,
       player: pangea.table.seat == i ? 1 : 0,
       stack: pangea.table.balances[i],
-      bet: pangea.table.bets[i]
+      bet: pangea.table.bets[i] - pangea.table.snapshot[i]
     });
 
     //if this is the current player
-    if (i == pangea.seat){
+    if (i == pangea.seat) {
       var player = {
         seat: parseInt(pangea.seat),
         sitting: 1,
         stack: pangea.table.balances[i]
       };
 
-      if (dealt){
+      if (dealt && !isFolded) {
         player.holecards = pangea.table.hand.holecards.split(" ");
       }
 
       pangea.API.player(player);
     }
 
-    if (dealt && addr == pangea.mynxtid && pangea.table.hand.holecards != undefined){
+    if (!isFolded && dealt && addr == pangea.mynxtid && pangea.table.hand.holecards != undefined) {
       seats[i].playercards = pangea.table.hand.holecards.split(" ");
     }
   };
 
   pangea.API.seats(seats);
+
+  function getIsFolded(seat){
+    if (contains(folded, seat)){
+        return true;
+    }
+
+    var playerActions = pangea.table.actions[seat];
+
+    for (var i = 0; i < playerActions.length; i++){
+      if (Object.keys(playerActions[i])[0] == "fold" || playerActions[i].action == "fold"){
+        console.log("player " + seat + " folded.");
+        folded.push(seat);
+        pangea.API.action({"returnPlayerCards": seat});
+        return true;
+      }
+    }
+
+    return false;
+  }
 }
 
 function performGameActions(){
   //summary is true when a hand has ended, we'll deal the new cards when the new game is ready and this flag is removed
   if (!pangea.table.summary && !dealt) {
+
+    reset();
+
+    console.log("redealing cards");
     var obj = {"holecards": [null, null], "dealer": 0};
     console.log(obj);
     pangea.API.deal(obj);
-    dealt = true;
+
+    //temporary hack to resolve folding at start of next round
+    setTimeout(function(){
+      dealt = true;
+    }, 2000);
+
   }
   else{
     var cards = {};
 
+
     //check if the hand is over so we can return the cards
     if (pangea.table.summary && dealt){
-      pangea.API.action({"returnCards": 0});
+      console.log("game ended");
+
+      //set dealt to false so once summary goes away the above code will trigger and reset the game
       dealt = false;
 
+      var won = pangea.table.summary.won;
       //delay sliding the chips to the player until slightly after the cards are returned
-      (function(won){
-        setTimeout(function(){
+      //(function(won){
+      //  setTimeout(function(){
           //and move the chips to the winner
           for (var i = 0; i < won.length; i++){
             if (won[i] > 0){
+              console.log("player " + i + " won");
               pangea.API.action({"chipsToPlayer": i});
             }
           }
-        }, 500);
-      })(pangea.table.summary.won);
+      //  }, 500);
+      //})(pangea.table.summary.won);
     }
     else if (dealt){
       var community = pangea.table.hand.community.trim().split(" ");
@@ -328,6 +377,7 @@ function performGameActions(){
       if (lastCommunityCard != last){
         lastCommunityCard = last;
 
+        console.log("round ended. chips to pot");
         pangea.API.action({"chipsToPot" : 1});
       }
 
@@ -376,4 +426,14 @@ function poll(){
 
     poll();
   }, 1000);
+}
+
+function contains(array, obj) {
+  var i = array.length;
+  while (i--) {
+    if (array[i] == obj) {
+      return true;
+    }
+  }
+  return false;
 }
