@@ -2,7 +2,7 @@
  * Created by _mr_e on 05/10/15.
  */
 
-var doge = require("../../dogeapi");
+var doge = require("../../btcdapi");
 
 module.exports.startTable = function(callback){
     doge.SuperNET('{"plugin":"InstantDEX","method":"orderbook","base":"BTCD","exchange":"pangea","allfields":1}', function(err, data){

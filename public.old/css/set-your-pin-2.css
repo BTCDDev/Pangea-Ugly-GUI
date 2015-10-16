@@ -1,0 +1,37 @@
+body{background-color:#eadfd5;font:400 16px/1.38 Montserrat;color:rgb(255, 255, 255);}
+
+button{display:block;position:absolute;top:469px;left:0;right:0;z-index:1;width:23.1666666666%;min-width:278px;max-width:278px;height:60px;min-height:60px;max-height:60px;margin:0 auto;border-radius:3px;background-color:rgb(58, 151, 212);font-family:'Hiragino Kaku Gothic Std';font-weight:400;line-height:1.38;text-align:center;color:rgb(255, 255, 255);}
+
+div p{margin-bottom:-0.3em;}
+
+.agreement{float:left;width:24.9166666666%;height:68px;margin:364px 0 0 37.5%;}
+
+.base1{position:absolute;top:147px;left:0;right:0;z-index:10;width:25%;min-width:300px;max-width:300px;height:142px;min-height:142px;max-height:142px;margin:0 auto;background-color:#364357;}
+
+.base2{position:absolute;top:289px;left:0;right:0;z-index:8;width:25%;min-width:300px;max-width:300px;height:59px;min-height:59px;max-height:59px;margin:0 auto;background-color:#ff2600;}
+
+.base3{position:absolute;top:455px;left:0;right:0;width:25%;min-width:300px;max-width:300px;height:87px;min-height:87px;max-height:87px;margin:0 auto;background-color:#364357;}
+
+.frame1{position:absolute;top:26px;right:59.4373568858%;z-index:4;width:20px;min-width:20px;max-width:20px;height:20px;min-height:20px;max-height:20px;background-color:rgb(58, 151, 212);}
+
+.frame2{position:relative;float:right;z-index:3;width:30px;min-width:30px;max-width:30px;height:30px;min-height:30px;max-height:30px;margin:21px 80px 0 0;background-color:rgb(54, 67, 87);}
+
+.group1{position:absolute;top:-5px;left:-100.469708589%;z-index:5;width:87.9121932515%;height:64px;}
+
+.group2{position:relative;float:left;width:163px;min-width:163px;max-width:163px;height:64px;margin:1px 0 0 47.14674%;}
+
+.text1{position:absolute;top:97px;left:0;right:0;z-index:12;margin:0 auto;font:400 20px/1.38 'Hiragino Kaku Gothic Std';text-align:center;color:rgb(0, 0, 0);}
+
+.text2{position:absolute;top:172px;left:0;right:0;z-index:11;margin:0 auto;font-weight:400;line-height:1.38;text-align:center;color:rgb(255, 255, 255);}
+
+.text2 p{margin-bottom:1em;}
+
+.text3{position:absolute;top:301px;left:0;right:0;z-index:9;margin:0 auto;font-size:12px;font-weight:400;line-height:1.38;text-align:center;color:rgb(255, 255, 255);}
+
+.text4{position:absolute;top:12px;left:-362.567101227%;z-index:2;width:736.1867331288%;font-family:Helvetica;font-weight:400;line-height:1.38;text-align:center;color:rgb(0, 0, 0);}
+
+.text1 a{border-top-width:0;border-right-width:0;border-bottom-width:0;border-left-width:0;border-color:transparent;border-style:none;border-top-left-radius:0;border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:0;background-color:transparent;font-family:inherit;font-style:inherit;font-size:inherit;font-weight:inherit;text-transform:inherit;text-decoration:inherit;letter-spacing:inherit;word-spacing:inherit;color:#515d6e;opacity:1;word-break:normal;word-wrap:normal;white-space:normal;}
+
+.text1 span{border-top-width:0;border-right-width:0;border-bottom-width:0;border-left-width:0;border-color:transparent;border-style:none;border-top-left-radius:0;border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:0;background-color:transparent;font-family:inherit;font-style:inherit;font-size:inherit;font-weight:inherit;text-transform:inherit;text-decoration:inherit;letter-spacing:inherit;word-spacing:inherit;color:inherit;opacity:1;word-break:normal;word-wrap:normal;white-space:normal;}
+
+.text4 a,.text4 span{border-top-width:0;border-right-width:0;border-bottom-width:0;border-left-width:0;border-color:transparent;border-style:none;border-top-left-radius:0;border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:0;background-color:transparent;font-family:Montserrat;font-style:inherit;font-size:12px;font-weight:inherit;text-transform:inherit;text-decoration:inherit;letter-spacing:inherit;word-spacing:inherit;color:rgb(81, 93, 110);opacity:1;word-break:normal;word-wrap:normal;white-space:normal;}

@@ -1,0 +1,39 @@
+body{background-color:#eadfd5;font:400 14px/1.38 Montserrat;color:rgb(0, 0, 0);}
+
+a{display:block;position:absolute;left:0;right:0;margin:0 auto;border-radius:3px;font-family:'Hiragino Kaku Gothic Std';font-weight:400;text-align:center;color:rgb(255, 255, 255);}
+
+.base{position:absolute;top:327px;left:0;right:0;z-index:1;width:25%;min-width:300px;max-width:300px;height:87px;min-height:87px;max-height:87px;margin:0 auto;background-color:#364357;}
+
+.createpassphrase{top:341px;z-index:2;width:23.1666666666%;min-width:278px;max-width:278px;height:60px;min-height:60px;max-height:60px;background-color:#3a97d4;font-size:18px;line-height:3.28;}
+
+.goback{top:449px;width:16.6666666666%;min-width:200px;max-width:200px;height:49px;min-height:49px;max-height:49px;background-color:#364357;line-height:3.58;}
+
+.text1{margin:157px auto 0;font:normal 16px/1.38 HiraKakuStd-W8;text-align:center;color:rgb(0, 0, 0);}
+
+.text1 p{margin-bottom:0.3em;}
+
+.text2{position:absolute;top:233px;left:0;right:0;z-index:4;margin:0 auto;font-weight:400;line-height:1.38;text-align:center;color:rgb(0, 0, 0);}
+
+.text3{position:absolute;top:273px;left:0;right:0;z-index:3;margin:0 auto;line-height:1.38;text-align:center;color:rgb(0, 0, 0);}
+
+.text1 a,.text1 em,.text1 strong{border-top-width:0;border-right-width:0;border-bottom-width:0;border-left-width:0;border-color:transparent;border-style:none;border-top-left-radius:0;border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:0;background-color:transparent;font-family:inherit;font-style:inherit;font-size:inherit;font-weight:inherit;text-transform:inherit;text-decoration:inherit;letter-spacing:inherit;word-spacing:inherit;color:inherit;opacity:1;word-break:normal;word-wrap:normal;white-space:normal;}
+
+.text1 span{border-top-width:0;border-right-width:0;border-bottom-width:0;border-left-width:0;border-color:transparent;border-style:none;border-top-left-radius:0;border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:0;background-color:transparent;font-family:inherit;font-style:inherit;font-size:inherit;font-weight:inherit;text-transform:inherit;text-decoration:inherit;letter-spacing:inherit;word-spacing:inherit;color:#515d6e;opacity:1;word-break:normal;word-wrap:normal;white-space:normal;}
+
+.text2 a,.text2 em,.text2 span,.text2 strong{border-top-width:0;border-right-width:0;border-bottom-width:0;border-left-width:0;border-color:transparent;border-style:none;border-top-left-radius:0;border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:0;background-color:transparent;font-family:inherit;font-style:inherit;font-size:inherit;font-weight:W8;text-transform:inherit;text-decoration:inherit;letter-spacing:inherit;word-spacing:inherit;color:#515d6e;opacity:1;word-break:normal;word-wrap:normal;white-space:normal;}
+
+.text3 span{border-top-width:0;border-right-width:0;border-bottom-width:0;border-left-width:0;border-color:transparent;border-style:none;border-top-left-radius:0;border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:0;background-color:transparent;font-family:inherit;font-style:inherit;font-size:inherit;font-weight:inherit;text-transform:inherit;text-decoration:inherit;letter-spacing:inherit;word-spacing:inherit;color:#ff2600;opacity:1;word-break:normal;word-wrap:normal;white-space:normal;}
+
+@media(max-width: 335px) {
+body{font-size:12px;}
+
+a{left:0;right:0;margin-right:auto;margin-left:auto;}
+
+.base{left:0;right:0;width:89.5522388059%;margin-right:auto;margin-left:auto;}
+
+.createpassphrase{width:82.9850746268%;}
+
+.text1{float:left;margin-top:0;margin-right:0;margin-left:0;font-size:14px;}
+
+.text2,.text3{left:0;right:0;margin-right:auto;margin-left:auto;font-size:12px;}
+}

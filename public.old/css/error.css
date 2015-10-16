@@ -1,0 +1,15 @@
+body{background-color:rgb(234, 223, 213);font:400 16px/1.38 Montserrat;color:rgba(237, 118, 118, 0.93);}
+
+img{display:block;width:92px;height:auto;margin:9px auto 0;overflow:hidden;}
+
+.main{width:263px;min-width:263px;max-width:263px;height:266px;min-height:266px;max-height:266px;margin:173px auto 0;background-color:rgb(255, 255, 255);box-shadow:3px 3px 5px rgba(0, 0, 0, .5);}
+
+.text1{margin:5px auto 0;font-weight:400;line-height:1.38;text-align:center;color:rgb(0, 0, 0);}
+
+.text2{margin:18px auto 0;font-weight:400;line-height:1.38;text-align:center;color:rgba(237, 118, 118, 0.93);}
+
+.text2 p{margin-bottom:0.5em;}
+
+.text1 span{border-top-width:0;border-right-width:0;border-bottom-width:0;border-left-width:0;border-color:transparent;border-style:none;border-top-left-radius:0;border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:0;background-color:transparent;font-family:inherit;font-style:inherit;font-size:30px;font-weight:inherit;text-transform:inherit;text-decoration:inherit;letter-spacing:inherit;word-spacing:inherit;color:rgb(207, 35, 35);opacity:1;word-break:normal;word-wrap:normal;white-space:normal;}
+
+.text2 span{border-top-width:0;border-right-width:0;border-bottom-width:0;border-left-width:0;border-color:transparent;border-style:none;border-top-left-radius:0;border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:0;background-color:transparent;font-family:inherit;font-style:normal;font-size:inherit;font-weight:inherit;text-transform:inherit;text-decoration:inherit;letter-spacing:inherit;word-spacing:inherit;color:inherit;opacity:1;word-break:normal;word-wrap:normal;white-space:normal;}

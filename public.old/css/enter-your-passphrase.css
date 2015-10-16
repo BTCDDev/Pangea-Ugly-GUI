@@ -1,0 +1,15 @@
+body{background-color:rgb(234, 223, 213);font:400 16px/1.38 Montserrat;color:rgb(0, 0, 0);}
+
+a{display:block;font-weight:400;text-align:center;color:rgb(255, 255, 255);}
+
+input{display:block;position:absolute;top:33px;left:0;right:0;z-index:2;width:93.0769230769%;min-width:242px;max-width:242px;height:50px;min-height:50px;max-height:50px;margin:0 auto;padding:0 10px;border:1px solid rgb(58, 151, 212);background-color:rgb(255, 255, 255);font-weight:400;line-height:1.38;color:rgb(81, 93, 110);}
+
+.enteryourpassphrase{float:left;width:76.5384615384%;margin:5px 0 0 11px;font-weight:400;line-height:1.38;color:rgb(0, 0, 0);}
+
+.goback{width:82.3076923076%;min-width:214px;max-width:214px;height:46px;margin:196px auto 0;border-radius:3px;background-color:#364357;line-height:2.88;}
+
+.main{position:relative;width:260px;height:162px;margin:151px auto 0;background-color:rgb(54, 67, 87);}
+
+.openwallet{position:absolute;top:91px;left:0;right:0;z-index:1;width:93.0769230769%;min-width:242px;max-width:242px;height:63px;margin:0 auto;background-color:rgb(58, 151, 212);font-family:'Hiragino Kaku Gothic Std';line-height:3.78;}
+
+.enteryourpassphrase span{border-top-width:0;border-right-width:0;border-bottom-width:0;border-left-width:0;border-color:transparent;border-style:none;border-top-left-radius:0;border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:0;background-color:transparent;font-family:inherit;font-style:inherit;font-size:inherit;font-weight:inherit;text-transform:inherit;text-decoration:inherit;letter-spacing:inherit;word-spacing:inherit;color:rgb(255, 255, 255);opacity:1;word-break:normal;word-wrap:normal;white-space:normal;}

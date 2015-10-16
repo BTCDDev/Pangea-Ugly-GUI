@@ -1,0 +1,13 @@
+body{background-color:rgb(234, 223, 213);font:400 16px/1.38 Montserrat;color:rgb(81, 93, 110);}
+
+button{display:block;position:absolute;top:113px;left:0;right:0;z-index:2;width:23.1666666666%;min-width:278px;max-width:278px;height:60px;min-height:60px;max-height:60px;margin:0 auto;border-radius:3px;background-color:#3e4872;font:400 18px/1.38 'Hiragino Kaku Gothic Std';text-align:center;color:#686997;}
+
+img{display:block;position:absolute;top:7px;left:0;right:0;z-index:3;width:43px;height:auto;margin:0 auto;overflow:hidden;}
+
+p{margin-bottom:0.5em;}
+
+.base{position:absolute;top:99px;left:0;right:0;z-index:1;width:25%;min-width:300px;max-width:300px;height:87px;min-height:87px;max-height:87px;margin:0 auto;background-color:#364357;}
+
+.container{position:relative;float:left;width:100%;height:281px;margin-top:168px;}
+
+.text{margin:229px auto 0;font-weight:400;line-height:1.38;text-align:center;color:rgb(81, 93, 110);}

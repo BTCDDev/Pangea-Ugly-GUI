@@ -1,0 +1,31 @@
+.page-sidebar{background-color:rgb(234, 223, 213);font:400 18px/1.38 Montserrat;color:rgb(255, 255, 255);}
+
+.sidebar-confirm{display:block;position:absolute;top:338px;left:0;right:0;width:242px;min-width:242px;max-width:264px;height:64px;min-height:64px;max-height:64px;margin:0 auto;border-radius:3px;background-color:rgb(58, 151, 212);font-size:20px;font-weight:400;line-height:1.38;text-align:center;color:rgb(255, 255, 255);}
+
+.sidebar-image{display:block;float:left;width:73px;min-width:73px;max-width:73px;height:auto;margin:32px 0 0 6.18157%;overflow:hidden;}
+
+.sidebar-_input-1,.sidebar-_input-2{display:block;position:absolute;left:0;right:0;width:243px;min-width:243px;max-width:243px;height:43px;min-height:43px;max-height:43px;margin:0 auto;padding:0 10px;border:1px solid rgb(0, 0, 0);background-color:rgb(242, 242, 242);font-family:Helvetica;font-weight:400;line-height:1.38;color:rgb(0, 0, 0);}
+
+.sidebar-amount{float:left;width:16.2327718223%;margin:112px 0 0 5.99339%;font-weight:400;line-height:1.38;color:rgb(255, 255, 255);}
+
+.sidebar-bitcoindark{position:absolute;top:58px;right:19.19479927%;z-index:10;font-size:21px;font-weight:700;line-height:1.38;text-align:center;color:rgb(54, 67, 87);}
+
+.sidebar-content{position:relative;float:left;z-index:5;width:274px;min-width:274px;max-width:274px;height:1311px;margin-top:130px;background-color:rgb(54, 67, 87);}
+
+.sidebar-footer{position:absolute;bottom:0;left:0;z-index:8;width:274px;min-width:274px;max-width:274px;background-color:rgb(54, 67, 87);}
+
+.sidebar-header{position:absolute;top:0;left:0;z-index:11;width:274px;min-width:274px;max-width:274px;min-height:130px;max-height:130px;background-color:rgb(58, 151, 212);}
+
+.sidebar-support{position:absolute;bottom:0;width:136px;min-width:136px;max-width:136px;height:67px;min-height:67px;max-height:67px;background-color:rgb(58, 151, 212);font-weight:400;line-height:4;text-align:center;color:rgb(255, 255, 255);}
+
+.sidebar-walletadress{position:absolute;top:13px;left:5.9946587874%;z-index:4;font-weight:400;line-height:1.38;color:rgb(254, 255, 255);}
+
+.support-1{left:0;z-index:7;}
+
+.support-2{right:0;z-index:7;}
+
+.sidebar-content .sidebar-_input-1{top:49px;z-index:3;}
+
+.sidebar-content .sidebar-_input-2{top:143px;z-index:1;}
+
+.sidebar-bitcoindark span{border-top-width:0;border-right-width:0;border-bottom-width:0;border-left-width:0;border-color:transparent;border-style:none;border-top-left-radius:0;border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:0;background-color:transparent;font-family:inherit;font-style:inherit;font-size:inherit;font-weight:inherit;text-transform:inherit;text-decoration:inherit;letter-spacing:inherit;word-spacing:inherit;color:rgb(255, 255, 255);opacity:1;word-break:normal;word-wrap:normal;white-space:normal;}

@@ -5,7 +5,7 @@ var http = require('http');
 
 var supernet = require("./supernet-api");
 
-var doge=require("../../dogeapi");
+var doge=require("../../btcdapi");
 
 var socket;
 

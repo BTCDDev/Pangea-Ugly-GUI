@@ -1,0 +1,25 @@
+body{background-color:rgb(234, 223, 213);font:400 16px/1.38 Helvetica;color:rgb(0, 0, 0);}
+
+a{display:block;position:absolute;top:356px;left:0;right:0;width:17.8333333333%;min-width:214px;max-width:214px;height:46px;margin:0 auto;border-radius:3px;background-color:#364357;font-weight:400;line-height:2.88;text-align:center;color:rgb(255, 255, 255);}
+
+.container1{position:relative;float:left;clear:both;z-index:7;width:64px;height:65px;margin:14px 0 0 6.53245%;}
+
+.container2{position:absolute;top:48px;left:79px;z-index:5;width:22.265625%;height:65px;}
+
+.container3{position:relative;float:left;z-index:3;width:22.268907563%;height:65px;margin:14px 0 0 18.125%;}
+
+.container3 .number4{margin-right:9px;}
+
+.main{position:relative;width:260px;min-width:260px;max-width:260px;height:131px;min-height:131px;max-height:131px;margin:192px auto 0;background-color:#364357;}
+
+.number1{float:right;width:45%;min-width:45px;max-width:45px;height:65px;min-height:65px;max-height:65px;margin-right:11px;background-color:rgb(58, 151, 212);}
+
+.number2{float:right;width:45%;min-width:45px;max-width:45px;height:65px;min-height:65px;max-height:65px;margin-right:13px;background-color:rgb(58, 151, 212);}
+
+.number4{float:right;width:45%;min-width:45px;max-width:45px;height:65px;min-height:65px;max-height:65px;background-color:rgb(58, 151, 212);}
+
+.text1{float:left;margin:12px 0 0 23px;font-weight:400;line-height:1.38;color:rgb(0, 0, 0);}
+
+.number4-2{position:relative;clear:both;z-index:1;margin:-65px 30px 0 0;}
+
+.text1 span{border-top-width:0;border-right-width:0;border-bottom-width:0;border-left-width:0;border-color:transparent;border-style:none;border-top-left-radius:0;border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:0;background-color:transparent;font-family:Montserrat;font-style:normal;font-size:inherit;font-weight:700;text-transform:inherit;text-decoration:inherit;letter-spacing:inherit;word-spacing:inherit;color:rgb(255, 255, 255);opacity:1;word-break:normal;word-wrap:normal;white-space:normal;}

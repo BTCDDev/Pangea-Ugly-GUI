@@ -1,18 +1,30 @@
 {
-  "name": "application-name",
+  "name": "BitcoinDark-Wallet",
   "version": "0.0.1",
   "private": true,
-  "scripts": {
-    "start": "node app.js"
+  "node-main": "./app.js",
+  "main": "loading.html",
+  "window": {
+    "show": true,
+    "title": "BitcoinDark Wallet",
+    "icon": "./images/btcd-logo.png",
+    "toolbar": false,
+    "frame": true,
+    "width": 1024,
+    "height": 700,
+    "position": "center",
+    "min_width": 800,
+    "min_height": 600
   },
   "dependencies": {
     "express": "3.4.8",
-	"cookie":"0.1.1",
+    "cookie":"0.1.1",
     "ejs": "0.8.5",
     "async": "0.2.10",
     "mongode": "0.1.6",
+    "node-btcd": "0.3.5",
     "socket.io": "*",
-	"cryptoaddress-validator": "0.0.1",
-	"xss":"0.1.7"
+    "cryptoaddress-validator": "0.0.1",
+    "xss":"0.1.7"
   }
 }

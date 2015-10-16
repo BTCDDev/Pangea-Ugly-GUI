@@ -1,0 +1,37 @@
+body{background-color:rgb(234, 223, 213);font:400 16px/1.38 Montserrat;color:rgb(0, 0, 0);}
+
+button{display:block;float:left;clear:both;width:240px;min-width:240px;max-width:240px;height:60px;min-height:60px;max-height:60px;margin:24px 0 0 7.14286%;border-radius:3px;background-color:rgb(58, 151, 212);font-weight:400;line-height:1.38;text-align:center;color:rgb(255, 255, 255);}
+
+img{display:block;position:absolute;top:7px;right:3.1305803571%;z-index:10;width:34px;height:auto;overflow:hidden;}
+
+input{display:block;float:left;clear:both;width:240px;min-width:240px;max-width:240px;height:46px;min-height:46px;max-height:46px;padding:0 10px;border:1px solid rgb(81, 93, 110);background-color:rgb(255, 255, 255);font-size:13px;font-weight:400;line-height:1.38;color:rgb(0, 0, 0);}
+
+textarea{display:block;width:85.7142857142%;height:183px;margin:34px auto 0;padding:5px;border:1px solid rgb(119, 119, 119);background-color:rgb(255, 255, 255);font-weight:400;line-height:1.38;color:rgb(0, 0, 0);resize:none;}
+
+.depart{position:relative;float:left;clear:both;z-index:8;width:86.0714285714%;height:1px;margin:8px 0 0 7.14844%;background-color:rgb(54, 67, 87);}
+
+.havingproblem{position:relative;float:left;z-index:9;margin:19px 0 0 17.42746%;font-weight:400;line-height:1.38;text-align:center;color:rgb(0, 0, 0);}
+
+.header{position:relative;width:100%;height:61px;margin:2px auto 0;}
+
+.main{position:relative;float:left;width:280px;min-width:280px;max-width:280px;height:623px;min-height:623px;max-height:623px;margin-left:38.33203%;background-color:rgb(255, 255, 255);box-shadow:3px 3px 5px rgba(0, 0, 0, .5);}
+
+.nevermind{margin:305px auto 0;font-weight:400;line-height:1.38;text-align:center;color:rgb(0, 0, 0);}
+
+.support{position:absolute;top:73px;left:0;z-index:13;width:100%;height:623px;}
+
+.youremailaddress{float:left;clear:both;height:22px;min-height:22px;max-height:22px;margin:28px 0 0 7.49442%;font-weight:400;line-height:1.38;color:rgb(0, 0, 0);}
+
+.youremailadress{margin-left:7.14286%;}
+
+.yourname{margin-left:7.49442%;}
+
+.description-1{float:left;clear:both;margin:12px 0 0 7.14286%;font-weight:400;line-height:1.38;color:rgb(0, 0, 0);}
+
+.yourname-1{float:left;clear:both;height:22px;min-height:22px;max-height:22px;margin-top:34px;font-weight:400;line-height:1.38;color:rgb(0, 0, 0);}
+
+.havingproblem span{border-top-width:0;border-right-width:0;border-bottom-width:0;border-left-width:0;border-color:transparent;border-style:none;border-top-left-radius:0;border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:0;background-color:transparent;font-family:inherit;font-style:normal;font-size:20px;font-weight:700;text-transform:inherit;text-decoration:inherit;letter-spacing:inherit;word-spacing:inherit;color:rgb(81, 93, 110);opacity:1;word-break:normal;word-wrap:normal;white-space:normal;}
+
+.nevermind span{border-top-width:0;border-right-width:0;border-bottom-width:0;border-left-width:0;border-color:transparent;border-style:none;border-top-left-radius:0;border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:0;background-color:transparent;font-family:inherit;font-style:inherit;font-size:inherit;font-weight:inherit;text-transform:inherit;text-decoration:inherit;letter-spacing:inherit;word-spacing:inherit;color:rgba(0, 0, 0, 0.25);opacity:1;word-break:normal;word-wrap:normal;white-space:normal;}
+
+.yourname span{border-top-width:0;border-right-width:0;border-bottom-width:0;border-left-width:0;border-color:transparent;border-style:none;border-top-left-radius:0;border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:0;background-color:transparent;font-family:inherit;font-style:inherit;font-size:inherit;font-weight:inherit;text-transform:inherit;text-decoration:inherit;letter-spacing:inherit;word-spacing:inherit;color:rgb(81, 93, 110);opacity:1;word-break:normal;word-wrap:normal;white-space:normal;}

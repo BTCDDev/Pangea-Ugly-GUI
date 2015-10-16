@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0">
+  <title>Bitcoindark</title>
+  <link href="http://fonts.googleapis.com/css?family=Montserrat:400,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/standardize.css">
+  <link rel="stylesheet" href="css/console.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <script src="js/jquery-min.js"></script>
+  <script src="js/rimages.js"></script>
+</head>
+<body class="body page-console clearfix">
+<div id="bcd">
+<div id="sidebar">
+  <div class="sidebar-header clearfix">
+    <img class="sidebar-image" src="images/slack-imgs.com copy-73x73-1.png" data-rimage data-src="images/slack-imgs.com copy-73x73-1.png">
+    <p class="sidebar-bitcoindark"><span>BitcoinDark</span></p>
+  </div>
+  <div class="sidebar-content clearfix">
+    <p class="sidebar-walletadress">Wallet address</p>
+    <input class="sidebar-_input-1" type="text">
+    <p class="sidebar-amount">Amount</p>
+    <input class="sidebar-_input-2" type="text">
+    <button class="sidebar-confirm">Confirm</button>
+  </div>
+  <div class="sidebar-footer">
+    <p onClick="window.location='send.html';" class="sidebar-support support-1">Logout</p>
+    <div onClick="window.location='send.html';" class="sidebar-support support-2">Support</div>
+  </div>
+</div>
+<div id = "app">
+  <div class="app">
+    <div class="header1 clearfix">
+      <img id="setting" class="setting" src="images/1429787091_settings.svg">
+      <img class="refresh" src="images/1429791038_sync.svg">
+      <div class="left">
+        <p class="number"><span>Total</span> : 0.00 BTCD</p>
+      </div>
+      <div class="center">
+        <p class="number"><strong><span>Available :  0.00 BTCD</span></strong></p>
+      </div>
+      <div class="right">
+        <p class="number"><span><span>Stake : 0.00 BTCD</span></span></p>
+      </div>
+    </div>
+    <div class="header2 clearfix">
+      <a href="send.html" class="send send-1">Send</a>
+      <a href="receive.html" class="receive receive-1">Receive</a>
+      <a href="history.html" class="history history-1">History</a>
+      <a href="console.html" class="console console-1">Console</a>
+      <div class="bar"></div>
+      <div class="send send-2">
+        <img class="send" src="images/1432056733_send-01.svg">
+      </div>
+      <div class="receive receive-2">
+        <img class="receive" src="images/receive.svg">
+      </div>
+      <div class="history history-2">
+        <img class="history" src="images/1432059740_alarm_alert_clock_event_history_schedule_time_watch.svg">
+      </div>
+      <div class="console console-2">
+        <img class="console" src="images/console(2)-35x35.png" data-rimage data-src="images/console(2)-35x35.png">
+      </div>
+    </div>
+  </div>
+</div>
+ <script>
+  var isOpen = false;
+  var bcd = document.getElementById('bcd');
+  document.getElementById('setting').onclick = function(){
+    if(isOpen) {
+     bcd.style.webkitTransform = '';
+      isOpen = false;
+    } else {
+      bcd.style.webkitTransform = 'translateX(274px)';
+      isOpen = true;
+    }
+}
+  </script>
+ 
+</body>
+</html>

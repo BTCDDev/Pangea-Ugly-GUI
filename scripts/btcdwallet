@@ -1,0 +1,75 @@
+#!/bin/bash
+
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  TARGET="$(readlink "$SOURCE")"
+  if [[ $TARGET == /* ]]; then
+    echo "SOURCE '$SOURCE' is an absolute symlink to '$TARGET'"
+    SOURCE="$TARGET"
+  else
+    DIR="$( dirname "$SOURCE" )"
+    echo "SOURCE '$SOURCE' is a relative symlink to '$TARGET' (relative to '$DIR')"
+    SOURCE="$DIR/$TARGET" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+  fi
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+
+usage(){
+	echo "Usage: btcdwallet [OPTION...]"
+	echo ""
+	echo "Example:"
+	echo "  ./btcdwallet -start		# Will start BTCD services"
+	echo "  ./btcdwallet -stop		# Will stop BTCD services"
+	echo "  ./btcdwallet -show-running	# Will show running BTCD services"
+	echo ""
+	echo "Options:"
+	echo "  -start				: To start services."	
+	echo "  -stop				: To stop services."
+	echo "  -show-running			: To show running services."
+	echo "  -install			: To install BitcoinDark"
+	echo "  -uninstall			: To uninstall BitcoinDark"
+	echo "  -help				: To see this help."
+	exit 1
+}
+
+if  [ "$1" = "-start" ]; then
+    echo "Starting Services..."
+$DIR/nwjs/nw $DIR/BitcoinDarkFiles/
+elif  [ "$1" = "-stop" ]; then
+    echo "Stopping BTCD Services..."
+pkill -9 BitcoinDarkd
+pkill -9 SuperNETd
+pkill -9 websocketd
+elif  [ "$1" = "-show-running" ]; then
+ps aux | grep SuperNETd | grep -v 'grep'
+ps aux | grep BitcoinDarkd | grep -v 'grep'
+ps aux | grep websocketd | grep -v 'grep'
+ps aux | grep nodejs | grep -v 'grep'
+elif  [ "$1" = "-install" ]; then
+sudo apt-get -y update;
+sudo apt-get -y install git curl libc6 libboost-program-options1.55.0 libboost-thread1.55.0 libdb++-dev
+	if [ `lsb_release -r | awk {'print $2'}` == "14.04" ]; then
+		sudo apt-get install libboost-filesystem1.55-dev libboost-program-options1.55.0 libboost-thread1.55.0 libminiupnpc-dev
+		sudo ln -s /usr/lib/libminiupnpc.so /usr/lib/x86_64-linux-gnu/libminiupnpc.so.10
+		sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+		sudo apt-get update
+		sudo apt-get upgrade
+		sudo apt-get install libstdc++6
+	fi
+	if [ -d "/opt/BTCDWallet" ]; then
+		sudo rm -rf /opt/BTCDWallet
+	fi
+sudo cp -av ../BTCDWallet /opt/BTCDWallet
+sudo ln -s /opt/BTCDWallet/btcdwallet /usr/bin/btcdwallet
+sudo cp -av /opt/BTCDWallet/BitcoinDarkFiles/scripts/BitcoinDark.desktop /usr/share/applications/
+elif  [ "$1" = "-uninstall" ]; then
+	sudo rm -rf /usr/bin/btcdwallet
+	sudo rm -rf /usr/share/applications/BitcoinDark.desktop
+	sudo rm -rf /opt/BTCDWallet
+elif  [ "$1" = "-help" -o "$1" = "-h" -o "$1" = "--help" ]; then
+	usage
+else
+	usage
+fi
+
+
