@@ -101,6 +101,8 @@ pangea.API.checkAutoControls = function(){
     var foldClicked = $('#checkbox1').prop('checked')
     if (foldClicked){
       pangea.sendMessage({'action':{'fold':'1'}})
+      pangea.onFold();
+      $('#checkbox1').attr('checked', false);
     }
   }
 }

@@ -24,9 +24,16 @@ pangea.gui.addJoinLabel = function(){
 
 pangea.gui.addPlayerControls = function(){
   $('#join-label').addClass('hide')
-  $('#fold').removeClass('hide')
-  $('#check').removeClass('hide')
-  $('#bet').removeClass('hide')
+  if (pangea.game.myturn) {
+    $('#fold').removeClass('hide')
+    $('#check').removeClass('hide')
+    $('#bet').removeClass('hide')
+  }
+  else{
+    $('#fold').addClass('hide')
+    $('#check').addClass('hide')
+    $('#bet').addClass('hide')
+  }
   $('#bet_slider').removeClass('hide')
   $('#bet-amount').removeClass('hide')
   $('#bet-label').removeClass('hide')
