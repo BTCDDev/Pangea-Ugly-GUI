@@ -45,6 +45,12 @@ pangea.dealerTray = function(){
 pangea.addChip = function(chipnum, left, top, extraClass){
   var chipDiv = document.createElement('div')
   if (extraClass == undefined){extraClass = 1}
+
+  //support 0.5
+  if (chipnum == 0.5){
+    chipnum = "05";
+  }
+
   if (extraClass.length > 1){
     chipDiv.className = 'chip chip' + chipnum + ' ' + extraClass
   } else {
@@ -174,6 +180,7 @@ var lastCommunityCard;
 var newGame = true;
 var dealt = false;
 var lastTurn = -1;
+var showdown = false;
 
 var folded = [];
 
@@ -201,10 +208,7 @@ function startNewGame(){
   newGame = false;
 
   var game = {
-    bigblind: pangea.table.bigblind,
-    myturn: pangea.table.hand.undergun == pangea.seat ? 1 : 0,
-    tocall: 0,
-    pot: [0]
+    bigblind: pangea.table.bigblind
   };
 
   var smallblind = pangea.table.bigblind / 2
@@ -235,6 +239,7 @@ function reset(){
   console.log("resetting");
 
   newGame = true;
+  showdown = false;
   folded = [];
   dealt = false;
 
@@ -254,10 +259,18 @@ function initializePlayerData(data){
 }
 
 function updateGame(){
+  //set the bet slider minimum if changing to the current player
+  var myturn = pangea.table.hand.undergun == pangea.seat ? 1 : 0;
+
+  if (!pangea.game.myturn && myturn == 1){
+    $('#bet_slider').val(pangea.game.bigblind + pangea.game.tocall);
+    $("#bet-amount").val(pangea.game.bigblind + pangea.game.tocall);
+  }
+
   //update the players timer, pass 0 since server removed timeleft propert
   pangea.API.game({
     timer: pangea.table.timeleft != undefined ? pangea.table.timeleft : 0,
-    myturn: pangea.table.hand.undergun == pangea.seat ? 1 : 0,
+    myturn: myturn,
     tocall: pangea.table.hand.betsize - pangea.table.bets[ pangea.seat],
     //array starting with the main pot
     pot: pangea.table.potTotals
@@ -309,34 +322,39 @@ function updateSeats(){
         return true;
     }
 
-    var playerActions = pangea.table.actions[seat];
-
-    for (var i = 0; i < playerActions.length; i++){
-      if (Object.keys(playerActions[i])[0] == "fold" || playerActions[i].action == "fold"){
-        console.log("player " + seat + " folded.");
+    if (pangea.table.status[seat] == "folded"){
         folded.push(seat);
         pangea.API.action({"returnPlayerCards": seat});
-        return true;
-      }
     }
 
-    return false;
+    //var playerActions = pangea.table.actions[seat];
+    //
+    //for (var i = 0; i < playerActions.length; i++){
+    //  if (Object.keys(playerActions[i])[0] == "fold" || playerActions[i].action == "fold"){
+    //    console.log("player " + seat + " folded.");
+    //    folded.push(seat);
+    //    pangea.API.action({"returnPlayerCards": seat});
+    //    return true;
+    //  }
+    //}
+    //
+    //return false;
   }
 }
 
 function performGameActions(){
   //summary is true when a hand has ended, we'll deal the new cards when the new game is ready and this flag is removed
-  if (!pangea.table.summary && !dealt) {
+  if (!pangea.table.summary && showdown || !dealt) {
 
     reset();
 
-    console.log("redealing cards");
-    var obj = {"holecards": [null, null], "dealer": 0};
-    console.log(obj);
-    pangea.API.deal(obj);
-
     //temporary hack to resolve folding at start of next round
     setTimeout(function(){
+      console.log("redealing cards");
+      var obj = {"holecards": [null, null], "dealer": 0};
+      console.log(obj);
+      pangea.API.deal(obj);
+
       dealt = true;
     }, 2000);
 
@@ -350,7 +368,7 @@ function performGameActions(){
       console.log("game ended");
 
       //set dealt to false so once summary goes away the above code will trigger and reset the game
-      dealt = false;
+      showdown = true;
 
       var won = pangea.table.summary.won;
       //delay sliding the chips to the player until slightly after the cards are returned

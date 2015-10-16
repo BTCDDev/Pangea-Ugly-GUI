@@ -141,18 +141,19 @@ pangea.Seat.prototype.showBet = function(thisseat){
 
   function showChips(){
     if (pangea.options.showChips == 1){
+      var chips0 = [10, 5, 1, 0.5]
       var chips1 = [25, 10, 5, 1]
       var chips2 = [250, 100, 50, 25, 10, 5, 1]
       var chips3 = [250, 100, 50, 25, 20, 10, 5, 1]
       var chips4 = [10000, 5000, 2000, 1000, 500, 250, 100, 50, 25, 20, 10, 5, 1]
-      var chipsets = [chips1, chips2, chips3, chips4]
+      var chipsets = [chips0, chips1, chips2, chips3, chips4]
       var bet = thisseat.bet
       var betStacks = null
       function getStacks(thisBet, chips){
         var thisBetStack = []
         for (var i=0; i<chips.length; i++){
           var chipval = chips[i]
-          if (thisBet/chipval > 1){
+          if (thisBet/chipval >= 1){
             if (Math.floor(thisBet/chipval) > 10){
               return false
             }

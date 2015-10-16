@@ -211,9 +211,6 @@ pangea.gui.betSlider = function(){
   } else {
     slider.prop('max', pangea.player.stack)
   }
-
-  slider.val(pangea.game.bigblind + pangea.game.tocall);
-  $("#bet-amount").val(pangea.game.bigblind + pangea.game.tocall);
 }
 
 pangea.gui.callRaise = function(){
